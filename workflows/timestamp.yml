@@ -1,30 +1,30 @@
-name: Blockchain Timestamp index.html
+name: OpenTimestamps index.html
 on:
   push:
     paths:
-      - 'augustogandia/MIT/index.html'  # Triggers only when this specific file changes
-permissions:
-  contents: write  # Grants the bot permission to push the .ots proof back to your repo
+      - 'MIT/index.html'  # Triggers only when this specific file changes
+
 jobs:
   timestamp:
     runs-on: ubuntu-latest
-    if: "! contains(github.event.head_commit.message, '[Auto]')" # Prevents infinite loops
+    permissions:
+      contents: write # Required to push the .ots file back to your repo
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Install OpenTimestamps
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install OpenTimestamps Client
         run: pip install opentimestamps-client
-      - name: Create Timestamp
+
+      - name: Generate Timestamp Proof
         run: |
-          # Creates the index.html.ots proof inside the same folder
-          ots stamp augustogandia/MIT/index.html 
-      - name: Commit proof
+          # Create the .ots proof for the specific file
+          ots stamp MIT/index.html
+
+      - name: Commit and Push Proof
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add augustogandia/MIT/index.html.ots
-          git commit -m "Update blockchain timestamp for index.html [Auto]"
+          git add your-folder-name/index.html.ots
+          git commit -m "Add OpenTimestamps proof for index.html [skip ci]"
           git push
