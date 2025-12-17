@@ -1,7 +1,8 @@
-name: Blockchain Timestamp
+name: Blockchain Timestamp index.html
 on:
   push:
-    branches: [ main ]
+    paths:
+      - 'index.html'  # Only runs when index.html is changed
 jobs:
   timestamp:
     runs-on: ubuntu-latest
@@ -11,12 +12,12 @@ jobs:
         run: pip install opentimestamps-client
       - name: Create Timestamp
         run: |
-          # This creates a timestamp proof for your latest commit
-          ots stamp README.md 
+          # Creates the .ots proof file specifically for index.html
+          ots stamp index.html 
       - name: Commit proof
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add *.ots
-          git commit -m "Add blockchain timestamp proof [Auto]"
+          git add index.html.ots
+          git commit -m "Update blockchain timestamp for index.html [Auto]"
           git push
