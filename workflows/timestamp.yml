@@ -1,14 +1,14 @@
-name: OpenTimestamps index.html
+name: OpenTimestamps MIT index.html
 on:
   push:
     paths:
-      - 'MIT/index.html'  # Triggers only when this specific file changes
+      - 'MIT/index.html'  # Triggers ONLY when MIT/index.html changes
 
 jobs:
   timestamp:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Required to push the .ots file back to your repo
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -18,13 +18,13 @@ jobs:
 
       - name: Generate Timestamp Proof
         run: |
-          # Create the .ots proof for the specific file
+          # Use the path relative to the repo root
           ots stamp MIT/index.html
 
       - name: Commit and Push Proof
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add your-folder-name/index.html.ots
-          git commit -m "Add OpenTimestamps proof for index.html [skip ci]"
+          git add MIT/index.html.ots
+          git commit -m "Add OpenTimestamps proof for MIT/index.html [skip ci]"
           git push
