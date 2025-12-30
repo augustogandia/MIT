@@ -24,8 +24,8 @@ To protect against plagiarism and claims of earlier publication, this project ut
 
 ---
 
-## 📅 Publication Log
-*   **Initial Publication:** [Date, e.g., December 17, 2025]
+## Publication Log
+*   **Initial Publication:** [Date, e.g., December 30, 2025]
 
 
 ---
